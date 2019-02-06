@@ -1,1 +1,1 @@
-"# JQ_study" 
+JQueryの勉強に使ったファイル
