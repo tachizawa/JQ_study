@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js'></script>
+    <style media="screen">
+    *{
+      padding: 0;
+      box-sizing: border-box;
+    }
+      header{
+        background-color: #fc2;
+      }
+
+        h1 {
+          padding: 18px;/*文字周りの余白*/
+          color: #010101;/*文字色*/
+          background: #eaf3ff;/*背景色*/
+          border-bottom: solid 5px #516ab6;/*下線*/
+        }
+      }
+      .nav{
+        float: right;
+
+      }
+      .nav li{
+        display: inline-block;
+        text-align: right;
+        margin-left: 40px;
+      }
+      a{
+        text-decoration: none;
+      }
+      a:visited{
+        color: none;
+      }
+      .tabbar{
+        height: 60px;
+      }
+
+      .panels{
+        height: calc(100% - 60px);
+      }
+      .active{
+        color: #f00;
+      }
+    </style>
+    <title></title>
+  </head>
+  <body>
+    <header class="top">
+      <h1>ネコは液体である</h1>
+      <ul class="nav">
+        <li><a href="#tab1">Cat1</a></li>
+        <li><a href="#tab2">Cat2</a></li>
+        <li><a href="#tab3">Cat3</a></li>
+      </ul>
+
+      <article class="group">
+        <section class="tab" id="tab1">
+        <img src="img/02.jpg" alt="cat1"></section>
+        <section class="tab" id="tab2" style="display: none">
+        <img src="img/03.jpg" alt="cat2"></section>
+        <section class="tab" id="tab3"style="display: none">
+        <img src="img/05.jpg" alt="cat3"></section>
+      </article>
+    </header>
+    <script type="text/javascript">
+      // $(function(){
+      //
+      //       $("a").click(function(){
+      //         $(".group section").hide();
+      //         $($(this).attr("href")).show();
+      //         $(".tab").removeClass('active');
+      //         $(this).addClass('active');
+      //         return false;
+      //       });
+
+
+
+          // })
+      $(function(){
+        let $nav = $('.nav'),
+            $panels = $('.tab')
+
+        $nav.on('click', 'a', function(event){
+          event.preventDefault();
+          if ($(this).hasClass('active')){
+            return;
+          }
+          // li a
+          $('.nav a , .group').removeClass('active')
+          $(this).addClass("active");
+
+          // section
+          let href = $(this).attr('href');
+          $('.tab').each(function(){
+            $panels.stop(true).hide();
+            $(href).stop(true).fadeIn();
+            /*
+            console.log($(this).attr('id'));
+            console.log(href)
+            console.log("#"+$(this).attr('id') === href)
+            */
+            // if("#"+$(this).attr('id') === href){
+            //   $(href).addClass('active').fadeIn();
+            // }else{
+            //   $(this).removeClass('active').fadeOut();
+              //$panels.stop(true).fadeOut();
+            })
+          })
+
+        })
+        // $(href).stop(true).fadeIn();
+        // $panels.stop(true).fadeOut();
+        // $($(this).find('a').attr('href')).stop(true).fadeIn();
+    </script>
+  </body>
+</html>

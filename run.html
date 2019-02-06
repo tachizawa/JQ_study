@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
+        crossorigin="anonymous">
+    <script src="./imsky-holder/holder.min.js"></script>
+    <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js'></script>
+
+    <style>
+        body {
+            margin: 0;
+        }
+
+        ul,
+        li {
+            text-decoration: none;
+            -webkit-padding-start: 0;
+        }
+
+        a,
+        a:hover {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        img {
+            width: 100% !important;
+            height: auto !important;
+        }
+    </style>
+    <style>
+        .slideshow {
+            height: 30vw;
+            min-width: 100%;
+            overflow: hidden;
+            position: absolute;
+        }
+
+        .slideshow-slides {
+            height: 100%;
+            position: absolute;
+            width: 100%;
+        }
+
+        .slideshow-slides .slide {
+            height: 100%;
+            overflow: hidden;
+            position: absolute;
+            width: 100%;
+        }
+
+        .slideshow-slides .slide img {
+            position: absolute;
+        }
+
+        .slideshow-nav a,
+        .slideshow-indicator a {
+            background-color: rgba(0, 0, 0, 0);
+        }
+
+        .slideshow-nav a {
+            position: absolute;
+            top: 42%;
+            color: white;
+            font-size: 2em;
+        }
+
+        .slideshow-nav a.prev {
+            left: 50px;
+        }
+
+        .slideshow-nav a.next {
+            right: 50px;
+        }
+
+
+        .slideshow-nav a.disabled {
+            display: none;
+        }
+
+        .slideshow-indicator {
+            bottom: 30px;
+            left: 0;
+            position: absolute;
+            right: 0;
+            text-align: center;
+        }
+
+        .slideshow-indicator a {
+            display: inline-block;
+            width: 16px;
+            margin-left: 3px;
+            margin-right: 3px;
+            border: 1px solid #FFF;
+            color: #FFF;
+        }
+
+        .slideshow-indicator a.active {
+            cursor: default;
+            background-color: #CCC;
+        }
+
+        .slideshow-indicator a:before {
+            margin-left: -110px;
+        }
+
+        .slideshow-indicator a.active:before {
+            margin-left: -130px;
+        }
+        .active{
+          width: 100%;
+
+        }
+        .sctiky{
+          height: 30px;
+          background-color: : #0ff;
+        }
+        .menu{
+
+        }
+    </style>
+
+    <div class="slideshow">
+        <div class="slideshow-slides">
+
+            <a class="slide" id="slide-1"><img id="holder"data-src="holder.js/1600x465?theme=sky&text=Sky" alt="walk"></a>
+
+            <a class="slide" id="slide-2"><img id="holder"data-src="holder.js/1600x465?theme=vine&text=Vine" alt="jellyfish"></a>
+            <a class="slide" id="slide-3"><img id="holder"data-src="holder.js/1600x465?theme=lava&text=Lava" alt="sea"></a>
+
+            <a class="slide" id="slide-4"><img id="holder"data-src="holder.js/1600x465?theme=social&text=Social" alt="moon"></a>
+        </div>
+        <div class="slideshow-nav">
+            <a href="#" class="prev"><i class="fa fa-chevron-left" aria-hidden="true"></i></a>
+            <a href="#" class="next"><i class="fa fa-chevron-right" aria-hidden="true"></i></a>
+        </div>
+        <div class="slideshow-indicator"></div>
+    </div>
+    <div class="menu">
+      <ul>
+        <li>About</li>
+        <li>Work</li>
+        <li>Blog</li>
+        <li>Recruit</li>
+        <li>Content</li>
+      </ul>
+    </div>
+    <script type="text/javascript">
+    let $container = $(this),
+        $contents = $(".slideshow-slides"),
+        $slideGroup = $contents.find('.slide'),
+        $slideCount = $slideGroup.length,
+        duration = 500,
+        interval = 2000,
+        $indicator = $('.slideshow-indicator'),
+        $indicatorHTML = '',
+        currentIndex = 0;
+
+        $slideGroup.each(function(i){
+          $(this).css({left: 100 * i + '%'});
+          $indicatorHTML += '<a href="#">' + (i + 1) + '</a>';
+        });
+        $indicator.html($indicatorHTML);
+    goToslide = (index) => {
+    $contents.animate({left: - 100 * index + '%'}, duration);
+    currentIndex = index;
+    updateNav();
+  }
+  updateNav = () => {
+    let $prev = $('.prev'),
+        $next = $('.next');
+
+        if (currentIndex === 0){
+          $prev.addClass('.disabled');
+        }else{
+          $prev.removeClass('.disabled');
+        }
+        if(currentIndex === $slideCount - 1) {
+          $next.addClass('.disabled');
+        }else{
+          $next.removeClass('.disabled');
+        }
+        $indicator.find('a').removeClass('.active')
+        .eq(currentIndex).addClass('.active')
+  }
+  startTimer = () => {
+      timer = setInterval(function(){
+        let nextIndex = (currentIndex + 1) % $slideCount ;
+        goToslide(nextIndex);
+      },interval);
+  }
+  function stopTimer(){
+    clearInterval(timer);
+  }
+  startTimer();
+
+  // let upContent = () => {
+  //   $slideshow.mouseenter(function(){
+  //     $(this).stopTimer()
+  //   })
+  // }
+  // let downContent = () => {
+  //   $slideshow.mouseleave(function(){
+  //     $(this).startTimer()
+  //   })
+  // }
+  $container.on({
+    mouseenter: stopTimer,
+    mouseleave: startTimer
+  })
+  let $nav = $('.slideshow-nav');
+
+  $nav.on('click', 'a', function(event){
+    event.preventDefault();
+    if ($(this).hasClass('prev')) {
+      goToslide(currentIndex - 1);
+    }else{
+      goToslide(currentIndex + 1);
+    }
+  });
+  $indicator.on('click', 'a' , function(event){
+    event.preventDefault();
+    if (!$(this).hasClass('active')){
+      goToslide($(this).index());
+    }
+  });
+</script>
+<script>
+  $(function(){
+    let $head = ('.menu'),
+
+    $(window).scroll(function(){
+      if ($(this).scrollTop() > $headPos ){
+        $('.manu ul').addClass('sticky')
+      }else{
+        $('.menu ul').removeClass('sticky');
+      }
+    })
+  })
+    </script>
+  </body>
+</html>

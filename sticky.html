@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <style media="screen">
+    body{
+      height: 2000px;
+    }
+    header{
+      margin-top: 50px;
+      height: 30px;
+      background-color: #fc2;
+      position: sticky;
+      top: 0;
+      left: 0;
+    }
+      .nav{
+          text-align: right;
+      }
+
+      .nav li{
+        display: inline-block;
+        margin-left: 30px;
+      }
+
+      .sticky{
+        height: 30px;
+        background-color: #0ff;
+      }
+    </style>
+    <title>sticky</title>
+  </head>
+  <body>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <header>
+      <ul class="nav">
+        <li>About</li>
+        <li>Work</li>
+        <li>Blog</li>
+        <li>Recruit</li>
+        <li>Contant</li>
+      </ul>
+    </header>
+    <script type="text/javascript">
+      $(function(){
+        let $head = $('header'),
+            $headPos = $head.offset().top;
+
+        $(window).scroll(function(){
+          if ($(this).scrollTop() > $headPos ){
+            $('header ul').addClass("sticky");
+          }else{
+            $('header ul').removeClass('sticky');
+          }
+        })
+      })
+    </script>
+  </body>
+</html>

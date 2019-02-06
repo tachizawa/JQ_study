@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"crossorigin="anonymous">
+  	<link rel="stylesheet" href="./css/style.css">
+    <title>sidebar</title>
+  </head>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <body>
+    <div class="icon">
+      <aside class="side" style="left: -250px;">
+          <ul>
+            <li><i class="fa fa-user-o" aria-hidden="true"></i></li>
+            <li><i class="fa fa-area-chart" aria-hidden="true"></i></li>
+            <li><i class="fa fa-coffee" aria-hidden="true"></i></li>
+            <li><i class="fa fa-shower" aria-hidden="true"></i></li>
+            <li><i class="fa fa-cog" aria-hidden="true"></i></li>
+        </ul>
+         <button type="button" name="button">
+           <i class="fa fa-check-circle" aria-hidden="true"></i>
+           <span>open</span>
+         </button>
+      </aside>
+    </div>
+    <script type="text/javascript">
+    $(function(){
+      let duration = 300,
+          $aside = $('.icon aside'),
+          $asideBtn = $aside.find('button').on('click',function(){
+            console.log("click now")
+            $aside.toggleClass('open');
+            if ($aside.hasClass('open')){
+              $aside.stop(true).animate({
+                  left: 0
+              }, duration);
+
+              $asideBtn.find('span').text('close');
+            }else {
+              $aside.stop(true).animate({
+                left: -250
+              }, duration);
+              $asideBtn.find('span').text("open");
+            }
+          })
+    });
+    </script>
+  </body>
+</html>
